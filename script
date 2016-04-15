@@ -1,0 +1,16 @@
+    public List<Path> getFileList(Path path) throws IOException{
+    List<Path> fileList = new ArrayList<>();
+    
+        if (Files.isRegularFile(path)){
+            fileList.add(path);
+        }
+        if (Files.isDirectory(path)){
+            try (DirectoryStream<Path> stream = Files.newDirectoryStream(path)){
+                for (Path entry: stream){
+                    collectFileList(entry);
+                }
+            }
+        }
+        
+        return fileList;
+    }
